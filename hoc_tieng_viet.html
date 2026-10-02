@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Học Tiếng Việt - Toán vui</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav class="navbar bg-white border-bottom sticky-top">
+  <div class="container" style="max-width:640px">
+    <a class="navbar-brand fw-bold" href="dashboard.html">🏠 Trang chủ</a>
+    <span class="badge text-bg-warning fs-6" id="me"></span>
+  </div>
+</nav>
+<main class="book">
+  <section id="home">
+    <header><h1>📚 Học Tiếng Việt</h1><div class="total" id="total"></div></header>
+    <div id="rngbox" hidden><p class="sub2">Phạm vi cộng, trừ:</p><div class="chips" id="rng"></div></div>
+    <h2>Bài học</h2><div class="list" id="topics"></div>
+    <h2>Trò chơi</h2><div class="list" id="games"></div>
+    <h2>Gần đây</h2><ul class="hist" id="hist"></ul>
+  </section>
+
+  <section id="quiz" hidden>
+    <div class="bar"><button class="ghost" id="exit">← Thoát</button><span id="prog"></span></div>
+    <div class="meter"><i id="fill"></i></div>
+    <p class="q" id="q"></p>
+    <div class="vis" id="vis"></div>
+    <div class="opts" id="opts"></div>
+    <p class="fb" id="fb" aria-live="polite"></p>
+    <button class="go" id="next" hidden>Câu tiếp</button>
+  </section>
+
+  <section id="done" hidden>
+    <div class="big" id="dstars"></div>
+    <p class="msg" id="dmsg"></p>
+    <p class="sub" id="dscore"></p>
+    <div class="stack">
+      <button class="go" id="again">Chơi lại</button>
+      <button class="ghost" id="home2" style="min-height:56px;font-size:22px">Về trang chủ</button>
+    </div>
+  </section>
+</main>
+<script src="js/common.js"></script>
+<script src="js/data_tieng_viet.js"></script>
+<script src="js/engine.js"></script>
+</body>
+</html>

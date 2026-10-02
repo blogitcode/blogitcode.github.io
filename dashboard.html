@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Toán vui - Trang chủ</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav class="navbar bg-white border-bottom">
+  <div class="container" style="max-width:860px">
+    <span class="navbar-brand fw-bold">🧮 Toán vui</span>
+    <div>
+      <span class="badge text-bg-warning fs-6 me-2" id="me"></span>
+      <button class="btn btn-sm btn-outline-secondary" id="out">Đổi bé</button>
+    </div>
+  </div>
+</nav>
+<main class="container py-4" style="max-width:860px">
+  <h1 class="fw-bold" id="hi"></h1>
+  <p class="lead" id="sum"></p>
+  <div class="row g-3" id="subs"></div>
+  <h2 class="h4 mt-4">Gần đây</h2>
+  <ul class="list-group" id="hist"></ul>
+</main>
+<script src="js/common.js"></script>
+<script>
+const SUBJECTS=[
+  {k:'toan',n:'Học Toán',i:'🔢',url:'hoc_toan.html',total:18,bar:'bg-primary',d:'Cộng, trừ, so sánh, xem giờ và các trò chơi'},
+  {k:'tv',n:'Học Tiếng Việt',i:'📚',url:'hoc_tieng_viet.html',total:5,bar:'bg-success',d:'Chữ cái, điền chữ, nhìn hình chọn từ'}
+];
+const u=U();
+if(!u)location.href='index.html';
+else{
+  $('me').textContent=u.av+' '+u.name;
+  $('hi').textContent='Chào '+u.name+'! '+u.av;
+  $('out').onclick=()=>{DB.cur=null;sv();location.href='index.html'};
+  let all=0;
+  SUBJECTS.forEach(s=>{
+    const ks=Object.keys(u.done).filter(k=>k.startsWith(s.k+'-'));
+    const learned=new Set(ks.map(k=>k.replace(/\d+$/,''))).size;
+    const stars=ks.reduce((a,k)=>a+u.done[k].best,0);all+=stars;
+    const col=document.createElement('div');col.className='col-md-6';
+    col.innerHTML='<a class="card subj shadow-sm h-100 text-decoration-none text-reset"><div class="card-body text-center p-4"><div class="display-1"></div><h2 class="h3 fw-bold"></h2><p class="text-muted mb-2"></p><div class="progress mb-2" style="height:14px"><div class="progress-bar"></div></div><small></small></div></a>';
+    col.querySelector('a').href=s.url;
+    col.querySelector('.display-1').textContent=s.i;
+    col.querySelector('h2').textContent=s.n;
+    col.querySelector('p').textContent=s.d;
+    const pb=col.querySelector('.progress-bar');pb.classList.add(s.bar);pb.style.width=Math.min(100,learned/s.total*100)+'%';
+    col.querySelector('small').textContent='Đã học '+learned+'/'+s.total+' bài, ⭐ '+stars;
+    $('subs').appendChild(col);
+  });
+  $('sum').textContent='Tổng cộng con có ⭐ '+all+'. Hôm nay con muốn học gì?';
+  if(!u.hist.length)$('hist').innerHTML='<li class="list-group-item">Chưa có bài nào. Chọn một môn để bắt đầu!</li>';
+  u.hist.forEach(h=>{const li=document.createElement('li');li.className='list-group-item';li.textContent=h.d+': '+h.t+' '+'⭐'.repeat(h.s);$('hist').appendChild(li)});
+}
+</script>
+</body>
+</html>

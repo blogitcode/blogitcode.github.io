@@ -1,10 +1,56 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <title>Trang web của tôi</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Toán vui - Đăng nhập</title>
+<!-- Google Fonts: Be Vietnam Pro -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>Xin chào! Website đang hoạt động trên GitHub Pages.</h1>
+<div class="container py-4" style="max-width:520px">
+  <div class="text-center mb-4">
+    <div class="display-1">🧮</div>
+    <h1 class="fw-bold">Toán vui</h1>
+    <p class="lead mb-0">Con là ai nào?</p>
+  </div>
+  <div class="d-grid gap-2 mb-4" id="plist"></div>
+  <div class="card shadow-sm"><div class="card-body">
+    <h2 class="h5">Thêm bé mới</h2>
+    <input id="nm" class="form-control form-control-lg mb-3" maxlength="12" placeholder="Tên của con" autocomplete="off">
+    <div class="d-flex flex-wrap gap-2 mb-3" id="avs"></div>
+    <button class="btn btn-warning btn-lg w-100 fw-bold" id="mk">Tạo tài khoản</button>
+  </div></div>
+</div>
+<script src="js/common.js"></script>
+<script>
+function draw(){
+  const pl=$('plist');pl.innerHTML='';
+  Object.entries(DB.users).forEach(([id,u])=>{
+    const b=document.createElement('button');
+    b.className='btn btn-outline-primary btn-lg text-start fw-bold';
+    b.textContent=u.av+'  '+u.name;
+    b.onclick=()=>{DB.cur=id;sv();location.href='dashboard.html'};
+    pl.appendChild(b);
+  });
+  $('avs').innerHTML='';
+  AVS.forEach(a=>{
+    const b=document.createElement('button');
+    b.className='btn btn-lg '+(a===av?'btn-warning':'btn-outline-secondary');
+    b.textContent=a;b.onclick=()=>{av=a;draw()};
+    $('avs').appendChild(b);
+  });
+}
+$('mk').onclick=()=>{
+  const n=$('nm').value.trim();if(!n){$('nm').focus();return}
+  const id='u'+Date.now();
+  DB.users[id]={name:n,av,done:{},hist:[]};DB.cur=id;sv();location.href='dashboard.html';
+};
+draw();
+</script>
 </body>
 </html>
