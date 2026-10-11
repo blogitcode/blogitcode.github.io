@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Toán vui - Đăng nhập</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body class="theme-home">
+<main class="app" style="max-width:520px">
+  <div class="text-center mb-3"><div id="mas"></div><h1 style="font-size:46px;color:var(--cd);margin:6px 0 0">Toán vui</h1><p class="mb-0">Mầm chào con! Con là ai nào?</p></div>
+  <div class="stack" id="plist" style="margin:0 0 18px"></div>
+  <div class="panel">
+    <h2 style="font-size:26px;color:var(--cd)">Thêm bé mới</h2>
+    <input id="nm" class="inp" maxlength="12" placeholder="Tên của con" autocomplete="off">
+    <div class="avs mb-3" id="avs"></div>
+    <button class="b3 gold block" id="mk">Tạo tài khoản</button>
+  </div>
+</main>
+<script src="js/common.js"></script>
+<script>
+$('mas').innerHTML=mascot('cheer','l bob');
+function draw(){
+  const pl=$('plist');pl.innerHTML='';
+  Object.entries(DB.users).forEach(([id,u])=>{
+    const b=document.createElement('button');b.className='b3 white block';b.style.justifyContent='flex-start';
+    b.textContent=u.av+'  '+u.name;
+    b.onclick=()=>{DB.cur=id;sv();location.href='dashboard.html'};
+    pl.appendChild(b);
+  });
+  $('avs').innerHTML='';
+  AVS.forEach(a=>{const b=document.createElement('button');b.className=a===av?'on':'';b.textContent=a;b.onclick=()=>{av=a;draw()};$('avs').appendChild(b)});
+}
+$('mk').onclick=()=>{
+  const n=$('nm').value.trim();if(!n){$('nm').focus();return}
+  const id='u'+Date.now();
+  DB.users[id]={name:n,av,done:{},hist:[],stickers:[],days:[]};DB.cur=id;sv();location.href='dashboard.html';
+};
+draw();
+</script>
+</body>
+</html>

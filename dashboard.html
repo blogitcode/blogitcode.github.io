@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Toán vui - Trang chủ</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body class="theme-home">
+<main class="app" style="max-width:860px">
+  <div class="tb">
+    <span class="chip3" id="streak"></span>
+    <span><span class="chip3" id="total"></span> <button class="b3 white" id="out">Đổi bé</button></span>
+  </div>
+  <div class="hero"><div id="mas"></div><div><h1 id="hi"></h1><div class="bubble" id="hello">Hôm nay con muốn học gì nào?</div></div></div>
+  <div class="row g-4" id="subs"></div>
+  <h2 class="lbl mt-4" style="font-size:26px">Album sticker</h2>
+  <div class="panel"><div class="stk" id="stk"></div><p class="mb-0 mt-2" id="stkn"></p></div>
+  <h2 class="lbl mt-4" style="font-size:26px">Gần đây</h2>
+  <div class="panel"><ul class="mb-0" id="hist"></ul></div>
+</main>
+<script src="js/common.js"></script>
+<script>
+const SUBJECTS=[{"k": "toan", "n": "Học Toán", "i": "🔢", "url": "hoc_toan.html", "d": "Số, hình, cộng trừ", "c": "i-toan", "total": 32}, {"k": "tv", "n": "Học Tiếng Việt", "i": "📚", "url": "hoc_tieng_viet.html", "d": "Chữ, vần, đọc hiểu", "c": "i-tv", "total": 61}, {"k": "kp", "n": "Khám phá", "i": "🔭", "url": "hoc_kham_pha.html", "d": "Gia đình, thiên nhiên, sức khỏe", "c": "i-kp", "total": 16}, {"k": "td", "n": "Tư duy", "i": "🧩", "url": "hoc_tu_duy.html", "d": "Quy luật, suy luận, đố vui", "c": "i-td", "total": 14}];
+const u=U();
+if(!u)location.href='index.html';
+else{
+  const tot=Object.values(u.done||{}).reduce((a,d)=>a+d.best,0);
+  $('hi').textContent='Chào '+u.name+'! '+u.av;
+  $('mas').innerHTML=mascot('happy','bob');
+  $('total').textContent='⭐ '+tot;
+  const st=streak(u);$('streak').textContent=st?'🔥 '+st+' ngày liên tiếp':'🔥 Học hôm nay để bắt đầu chuỗi ngày!';
+  $('out').onclick=()=>{DB.cur=null;sv();location.href='index.html'};
+  SUBJECTS.forEach(s=>{
+    const ks=Object.keys(u.done||{}).filter(k=>k.startsWith(s.k+'-'));
+    const learned=new Set(ks.map(k=>k.replace(/@\d+$/,''))).size;
+    const stars=ks.reduce((a,k)=>a+u.done[k].best,0);
+    const col=document.createElement('div');col.className='col-6';
+    col.innerHTML='<a class="isle '+s.c+'"><span class="em"></span><h2></h2><p></p><div class="pb"><i></i></div><small></small></a>';
+    col.querySelector('a').href=s.url;
+    col.querySelector('.em').textContent=s.i;
+    col.querySelector('h2').textContent=s.n;
+    col.querySelector('p').textContent=s.d;
+    col.querySelector('.pb i').style.width=Math.min(100,learned/s.total*100)+'%';
+    col.querySelector('small').textContent='Đã học '+learned+'/'+s.total+' bài, ⭐ '+stars;
+    $('subs').appendChild(col);
+  });
+  u.stickers.forEach(x=>{const e=document.createElement('span');e.textContent=x;$('stk').appendChild(e)});
+  $('stkn').textContent=u.stickers.length?'Con có '+u.stickers.length+'/'+STICKERS.length+' sticker. Được 3 sao ở một bài mới sẽ nhận thêm sticker!':'Được 3 sao ở một bài để nhận sticker đầu tiên nhé!';
+  if(!(u.hist||[]).length){$('hist').innerHTML='<li>Chưa có bài nào. Chọn một hòn đảo để bắt đầu!</li>'}
+  (u.hist||[]).slice(0,5).forEach(h=>{const li=document.createElement('li');li.textContent=h.d+': '+h.t+' '+'⭐'.repeat(h.s);$('hist').appendChild(li)});
+}
+</script>
+</body>
+</html>

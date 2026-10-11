@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tư duy - Toán vui</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body class="theme-td">
+<main class="app">
+  <section id="home">
+    <div class="tb">
+      <a class="b3 white" href="dashboard.html">← Trang chủ</a>
+      <span><span class="chip3" id="total"></span> <span class="chip3" id="me"></span></span>
+    </div>
+    <div class="hero">
+      <div id="hmas"></div>
+      <div><h1>🧩 Tư duy</h1><div class="bubble" id="hello"></div></div>
+    </div>
+    <div id="units"></div>
+  </section>
+
+  <section id="quiz" hidden>
+    <div class="tb"><button class="b3 white" id="exit">← Thoát</button><span class="chip3" id="prog"></span></div>
+    <div class="stage">
+      <div class="meter"><i id="fill"></i></div>
+      <div class="pass" id="pass" hidden></div>
+      <button class="b3 gold say" id="say" hidden>🔊 Nghe</button>
+      <p class="q" id="q"></p>
+      <div class="vis" id="vis"></div>
+      <div class="opts" id="opts"></div>
+      <div class="fb" id="fb"></div>
+      <button class="b3 gold block" id="next" hidden>Câu tiếp</button>
+    </div>
+  </section>
+
+  <section id="game" hidden>
+    <div class="tb"><button class="b3 white" id="gexit">← Thoát</button><span class="chip3" id="ginfo"></span></div>
+    <div class="stage"><p class="q" id="gq"></p><div id="gbody"></div></div>
+  </section>
+
+  <section id="done" hidden>
+    <div class="stage done">
+      <div id="dmas"></div>
+      <div class="big" id="dstars"></div>
+      <h2 id="dmsg"></h2>
+      <p id="dscore"></p>
+      <div id="dsticker"></div>
+      <div class="stack">
+        <button class="b3 gold block" id="again">Chơi lại</button>
+        <button class="b3 white block" id="home2">Về đường học</button>
+      </div>
+    </div>
+  </section>
+</main>
+<script src="js/common.js"></script>
+<script src="js/data_tu_duy.js"></script>
+<script src="js/engine.js"></script>
+</body>
+</html>
